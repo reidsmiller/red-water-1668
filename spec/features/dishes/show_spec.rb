@@ -67,5 +67,29 @@ RSpec.describe 'dish_path', type: :feature do
       visit dish_path(@dish2)
       expect(page).to have_content("Chef: #{@chef2.name}")
     end
+
+    it 'I see a form to add an existing ingredient to that dish' do
+      visit dish_path(@dish1)
+      ingredient1 = Ingredient.create!(name: 'Green Onion', calories: 10)
+      ingredient2 = Ingredient.create!(name: 'Shrimp', calories: 100)
+
+      expect(page).to have_field('dish_ingredient[ingredient_id]')
+      expect(page).to have_button('Add Ingredient')
+      expect(page).to_not have_content('Green Onion')
+      expect(page).to_not have_content('Shrimp')
+
+      fill_in 'dish_ingredient[ingredient_id]', with: ingredient1.id.to_s
+      click_button 'Add Ingredient'
+
+      expect(current_path).to eq(dish_path(@dish1))
+      expect(page).to have_content('Green Onion')
+      expect(page).to_not have_content('Shrimp')
+
+      fill_in 'dish_ingredient[ingredient_id]', with: ingredient2.id.to_s
+      click_button 'Add Ingredient'
+
+      expect(current_path).to eq(dish_path(@dish1))
+      expect(page).to have_content('Shrimp')
+    end
   end
 end
