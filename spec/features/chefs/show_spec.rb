@@ -32,9 +32,9 @@ RSpec.describe 'chef_path', type: :feature do
 
     it 'I see a link to view a list of all ingredients that this chef uses and see a link to a chefs ingredients index page' do
       visit chef_path(@chef1)
-      
+
       expect(page).to have_content(@chef1.name.to_s)
-      expect(page).to have_link("All Ingredients #{@chef1.name} Uses:", href: chef_ingredients_path(@chef1))
+      expect(page).to have_link("All Ingredients #{@chef1.name} Uses")
 
       click_link "All Ingredients #{@chef1.name} Uses"
       expect(current_path).to eq(chef_ingredients_path(@chef1))

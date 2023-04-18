@@ -34,6 +34,9 @@ RSpec.describe 'chef_ingredients_path' do
       @ingredient11 = Ingredient.create!(name: 'Peanut Butter', calories: 190)
       @ingredient12 = Ingredient.create!(name: 'Jelly', calories: 150)
       @ingredient13 = Ingredient.create!(name: 'Bread', calories: 150)
+      DishIngredient.create!(dish_id: @dish3.id, ingredient_id: @ingredient11.id)
+      DishIngredient.create!(dish_id: @dish3.id, ingredient_id: @ingredient12.id)
+      DishIngredient.create!(dish_id: @dish3.id, ingredient_id: @ingredient13.id)
     end
 
     it 'I see a unique list of names of all the ingredients that this chef uses' do
